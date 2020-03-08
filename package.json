@@ -1,0 +1,32 @@
+{
+  "name": "kbone-typescript",
+  "version": "1.0.0",
+  "description": "mark",
+  "main": "index.js",
+  "scripts": {
+    "debug": "./node_modules/.bin/webpack --mode production --watch --config ./build/webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codetest/kbone-typescript.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codetest/kbone-typescript/issues"
+  },
+  "homepage": "https://github.com/codetest/kbone-typescript#readme",
+  "dependencies": {
+    "vue": "^2.6.11",
+    "vue-property-decorator": "^8.4.0"
+  },
+  "devDependencies": {
+    "mp-webpack-plugin": "^0.8.5",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.8.3",
+    "vue-loader": "^15.9.0",
+    "vue-template-compiler": "^2.6.11",
+    "webpack-cli": "^3.3.11"
+  }
+}
