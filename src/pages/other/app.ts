@@ -19,20 +19,7 @@ export default function createApp() {
         }]
     })
 
-    if (IsMiniProgram){
-        console.log("It is miniprogram env")
-    }
-    else{
-        console.log("It is not miniprogram env")
-    }
-
-    if (IsMiniProgram){
-        document.documentElement.style.fontSize = wx.getSystemInfoSync().screenWidth / 16 + 'px'
-    }
-    else{
-        document.documentElement.style.fontSize = document.documentElement.getBoundingClientRect().width / 16 + 'px'
-    }
-
+    document.documentElement.style.fontSize = wx.getSystemInfoSync().screenWidth / 16 + 'px'
     const container = document.createElement('div')
     container.id = 'app'
     document.body.appendChild(container)

@@ -35,7 +35,10 @@ const mpConfig = {
 		navigationBarBackgroundColor: '#F6F6F6',
 		navigationBarTitleText: 'kbone测试开发',
 		navigationBarTextStyle: 'black',
-	},
+    },
+    appExtraConfig: {
+        requiredBackgroundModes: ["audio"]
+    }
 }
 
 module.exports = {
