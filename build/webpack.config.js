@@ -16,6 +16,7 @@ const mpConfig = {
     },
     generate: {
         autoBuildNpm: true, // 安装小程序render和element这两个依赖
+        appEntry: 'miniprogram-app',
     },
     // 项目配置，会被合并到 project.config.json
     projectConfig: {
@@ -27,7 +28,8 @@ const mpConfig = {
 module.exports = {
     mode: 'production',
     entry: {
-        index: path.resolve(__dirname, '../src/pages/index/app.ts'),
+        'miniprogram-app': path.resolve(__dirname, '../src/main.ts'),
+        'index': path.resolve(__dirname, '../src/pages/index/app.ts'),
     },
     output: {
         path: path.resolve(__dirname, '../dist/common'), // 放到小程序代码目录中的 common 目录下
