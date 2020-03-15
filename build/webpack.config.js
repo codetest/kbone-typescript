@@ -1,6 +1,7 @@
 const path = require('path')
 const { VueLoaderPlugin } = require('vue-loader')
 const MpPlugin = require('mp-webpack-plugin') // 用于构建小程序代码的 webpack 插件，生成project.config.json和app.json
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const mpConfig = {
     // 页面 origin，默认是 https://miniprogram.default
@@ -44,7 +45,10 @@ module.exports = {
     },
     plugins: [
         new VueLoaderPlugin(),
-        new MpPlugin(mpConfig)
+        new MpPlugin(mpConfig),
+        new MiniCssExtractPlugin({
+            filename: '[name].wxss',
+        }),
     ],
     module: {
         rules: [
@@ -73,7 +77,19 @@ module.exports = {
                     }
                 ]
             },
-
+            /* sass */
+            {
+                test: /\.sass$/,
+                loaders: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+            },
+            /* css */
+            {
+                test: /\.css$/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                ]
+            },
         ]
     }  
 }
