@@ -148,7 +148,8 @@ module.exports = {
                             fallback: {
                                 loader: 'file-loader',
                                 options: {
-                                    name: 'images/[name].[hash:8].[ext]',                  
+                                    name: 'images/[name].[hash:8].[ext]',
+									publicPath: "common"
                                 }
                             }
                         }

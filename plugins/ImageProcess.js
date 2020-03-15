@@ -24,6 +24,28 @@ class ImageProcessPlugin {
             if (!fs.existsSync(folder)){
                 fs.mkdirSync(folder)
             }
+
+            var that = this
+            fs.watch(path.resolve(distBasePath), {}, (event, filename) => {
+                console.log("Executing ImageProcessPlugin")
+                console.log(event, filename)
+                try{
+                    var fileList = []
+                    that.readAllFiles(path.resolve(distBasePath), fileList)
+                    for (var inx = 0; inx < fileList.length; ++inx) {
+                        var file = fileList[inx]
+                        var dist = file.replace("\\common\\", "\\miniprogram_npm\\miniprogram-element\\")
+                        try{
+                            fs.copyFileSync(file, dist)
+                        }
+                        catch(err){
+                            console.log(err)
+                        }
+                    } 
+                }   
+                catch(err){
+                }            
+            })
         }
         catch(err){
             console.log(err)
@@ -32,7 +54,7 @@ class ImageProcessPlugin {
 
     readAllFiles(filePath, fileList) {
         var that = this
-        try{
+        try {
             var files = fs.readdirSync(filePath)
             for (var inx = 0; inx < files.length; ++inx) {
                 var file = path.resolve(filePath, files[inx])
@@ -45,41 +67,29 @@ class ImageProcessPlugin {
                 }
             }
         }
-        catch(err){
+        catch(err) {
+        }
+    }
+
+    clearFiles(path) {
+        try {
+            var files = fs.readdirSync(path)
+            for (var inx = 0; inx < files.length; ++inx) {
+                var file = path.resolve(filePath, files[inx])
+                var stat = fs.statSync(file)
+                if (stat.isFile()) {
+                    fs.unlinkSync(file)
+                }
+                else if (stat.isDirectory()) {
+                    this.clearFiles(file);
+                }
+            }
+        }
+        catch(err) {
         }
     }
 
     apply(compiler) {
-        var that = this
-        compiler.hooks.afterCompile.tap('ImageProcessPlugin', (
-            stats
-        ) => {
-            console.log("Executing ImageProcessPlugin")
-            var fileList = []
-            that.readAllFiles(path.resolve(distBasePath), fileList)
-            for (var inx = 0; inx < fileList.length; ++inx) {
-                var file = fileList[inx]
-                var dist = file.replace("\\common\\", "\\miniprogram_npm\\miniprogram-element\\")
-                if (!fs.existsSync(dist)){
-                    console.log(dist)
-                    let inx = 0
-                    var interval = setInterval(() => {
-                        ++inx;
-                        if (inx > 10){
-                            clearInterval(interval)
-                            return;
-                        }
-
-                        try{
-                            fs.copyFileSync(file, dist)
-                        }
-                        catch(err){
-                            console.log(err)
-                        }
-                    }, 1000)
-                }
-            }
-        });
     }
 }
 
